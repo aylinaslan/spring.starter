@@ -13,6 +13,7 @@ import java.util.List;
 @RestController //controller görevi göreceğini springe haber veriyoruz
 @RequestMapping("home") //controller http://localhost:8080/home sayfası olduğunu söylüyor
 public class HomeController {
+  List<Product> productList = new ArrayList<>();
   @GetMapping("index")//http://localhost:8080/home/index
   public  String get(){
     return "merhaba turkcell";
@@ -23,18 +24,7 @@ public class HomeController {
   }
   @GetMapping("products")
   public List<Product> getProducts(){
-    List<Product> productList = new ArrayList<>();
 
-    Product product1 = new Product();
-    product1.setId(1);
-    product1.setName("Laptop");
-
-    Product product2 = new Product();
-    product2.setId(2);
-    product2.setName("Telefon");
-
-    productList.add(product1);
-    productList.add(product2);
 
     // InMemory
 
@@ -49,6 +39,13 @@ public class HomeController {
     product.setId(id);
     product.setName("Laptop");
     return product;
+  }
+
+  @PostMapping("product")
+  public String addProduct(@RequestBody Product product){
+  productList.add(product);
+  return product.getName()+ "  ürün eklendi";
+
   }
 
   // Her bir temel entitynin kendi controllerinin bulunması best practicedir.
