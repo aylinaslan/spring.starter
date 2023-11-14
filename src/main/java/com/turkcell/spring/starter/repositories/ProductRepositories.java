@@ -1,4 +1,7 @@
 package com.turkcell.spring.starter.repositories;
 
-public interface ProductRepositories {
+import com.turkcell.spring.starter.entities.Product;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface ProductRepositories extends JpaRepository<Product,Integer> {
 }

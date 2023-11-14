@@ -1,7 +1,10 @@
 package com.turkcell.spring.starter.controllers;
 
 import com.turkcell.spring.starter.entities.Product;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyEmitter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,11 +45,21 @@ public class HomeController {
   }
 
   @PostMapping("product")
-  public String addProduct(@RequestBody Product product){
-  productList.add(product);
-  return product.getName()+ "  ürün eklendi";
+  public ResponseEntity addProduct(@RequestBody Product product){
+
+  if(product.getId()<=0){
+    return new ResponseEntity<>("eklenecek id 0 dan büyük olmalıdır", HttpStatus.BAD_GATEWAY);
+  }
+   productList.add(product);
+
+  return new ResponseEntity<>(product.getName()+ "  ürün eklendi", HttpStatus.CREATED) ;
 
   }
 
   // Her bir temel entitynin kendi controllerinin bulunması best practicedir.
+  // CREATED
+  // 2XX => Başarılı => 200,201
+  // 4XX => Başarısız  => 404,401
+
+
 }
