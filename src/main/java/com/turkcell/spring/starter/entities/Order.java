@@ -1,16 +1,19 @@
 package com.turkcell.spring.starter.entities;
 
 import java.time.LocalDate;
+import java.util.List;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Entity
 @Table(name="orders")
+@AllArgsConstructor
+@NoArgsConstructor
 public class Order {
     @Id
     @Column(name="order_id")
@@ -41,4 +44,21 @@ public class Order {
     private String shipPostalCode;
     @Column(name="ship_country")
     private String shipCountry;
+    @ManyToOne()
+    @JoinColumn(name = "ship_via")
+    @JsonIgnore
+    private Shipper shipper;
+
+    @ManyToOne()
+    @JoinColumn(name = "customer_id")
+    @JsonIgnore
+    private Customer customer;
+
+    @ManyToOne()
+    @JoinColumn(name = "employee_id")
+    @JsonIgnore
+    private Employee employee;
+
+    @OneToMany(mappedBy = "order")
+    private List<OrderDetail> orderDetails;
 }

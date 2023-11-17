@@ -16,7 +16,7 @@ public class ProductController {
     private final ProductRepositories productRepositories;
 
     @Autowired
-    public ProductController(ProductRepositories productRepository) {
+    public ProductController(ProductRepositories productRepositories) {
         this.productRepositories = productRepositories;
     }
 
